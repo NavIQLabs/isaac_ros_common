@@ -25,5 +25,31 @@ RUN apt install libusb-1.0-0-dev -y
 RUN apt install libturbojpeg -y 
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/zed/lib"
 
+# # dependencies
+# RUN apt install libeigen3-dev -y
+# RUN apt install libsuitesparse-dev -y
+# RUN apt install qtdeclarative5-dev -y
+# RUN apt install qt5-qmake -y
+# RUN apt install libqglviewer-dev-qt5 -y
+
+# # build g2o package 
+# RUN git clone https://github.com/RainerKuemmerle/g2o.git /usr/lib/g2o 
+# RUN mkdir /usr/lib/g2o/build
+# RUN cd /usr/lib/g2o/build
+# RUN cmake ..
+# RUN make
+# RUN make install
+
+# # build stella vslam package
+# RUN rosdep update
+# RUN apt update -y 
+# RUN git clone --recursive --depth 1 https://github.com/stella-cv/stella_vslam.git /usr/lib/stella-vslam
+# RUN rosdep install -y -i --from-paths /usr/lib/
+# RUN mkdir /usr/lib/stella-vslam/build
+# RUN source /opt/ros/humble/setup.zsh
+# RUN cd /usr/lib/stella-vslam/build
+# RUN cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+# RUN make 
+# RUN make install
 
 
