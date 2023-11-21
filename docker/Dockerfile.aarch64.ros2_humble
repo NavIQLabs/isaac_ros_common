@@ -23,6 +23,8 @@ RUN apt install ros-humble-robot-localization -y
 RUN apt install ros-humble-xacro -y
 RUN apt install libusb-1.0-0-dev -y
 RUN apt install libturbojpeg -y 
+RUN apt install ros-humble-rtabmap -y
+RUN apt install ros-humble-pcl-conversions -y
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/zed/lib"
 
 # # dependencies
