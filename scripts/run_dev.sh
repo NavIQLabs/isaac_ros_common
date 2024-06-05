@@ -208,13 +208,17 @@ fi
 
 # Run container from image
 print_info "Running $CONTAINER_NAME"
-docker run -it --rm \
+docker run -it \
     --privileged \
     --network host \
     ${DOCKER_ARGS[@]} \
     -v $ISAAC_ROS_DEV_DIR:/workspaces \
     -v /dev/*:/dev/* \
     -v /etc/localtime:/etc/localtime:ro \
+    -v /tmp:/tmp \
+    -v /var/nvidia/nvcam/settings/:/var/nvidia/nvcam/settings/ \
+    -v /etc/systemd/system/zed_x_daemon.service:/etc/systemd/system/zed_x_daemon.service \
+    -v /usr/local/zed/resources:/usr/local/zed/resources \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
