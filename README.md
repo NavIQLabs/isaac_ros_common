@@ -33,6 +33,23 @@ Please visit the [Isaac ROS Documentation](https://nvidia-isaac-ros.github.io/re
 
 ---
 
+## Usage
+Add shortcut to your .bashrc .zshrc
+```zsh
+echo "alias isaac_ros='cd ${ISAAC_ROS_WS}/isaac_ros-dev/src/isaac_ros_common && ./scripts/run_dev.sh ${ISAAC_ROS_WS}'" >> ~/.bashrc
+source ~/.bashrc
+```
+
+Run normally
+```zsh
+isaac_ros
+```
+
+Run without building
+```zsh
+isaac_ros --no-build
+```
+
 ## Latest
 
 Update 2023-10-18: Updated for Isaac ROS 2.0.0.

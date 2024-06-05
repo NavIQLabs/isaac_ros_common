@@ -24,9 +24,23 @@ if [[ -f "${ROOT}/.isaac_ros_common-config" ]]; then
     . "${ROOT}/.isaac_ros_common-config"
 fi
 
-ISAAC_ROS_DEV_DIR="$1"
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-p|--path)
+		  path="$2"
+		  ;;
+		--no-build)
+		  NOB=true
+		  ;;
+		*)
+		NOB=false
+	esac
+	shift
+done
+
+ISAAC_ROS_DEV_DIR=$path
 if [[ -z "$ISAAC_ROS_DEV_DIR" ]]; then
-    ISAAC_ROS_DEV_DIR_DEFAULTS=("$HOME/workspaces/isaac_ros-dev" "/workspaces/isaac_ros-dev")
+    ISAAC_ROS_DEV_DIR_DEFAULTS=("$HOME/workspaces" "/workspaces")
     for ISAAC_ROS_DEV_DIR in "${ISAAC_ROS_DEV_DIR_DEFAULTS[@]}"
     do
         if [[ -d "$ISAAC_ROS_DEV_DIR" ]]; then
@@ -116,7 +130,7 @@ fi
 # Re-use existing container.
 if [ "$(docker ps -a --quiet --filter status=running --filter name=$CONTAINER_NAME)" ]; then
     print_info "Attaching to running container: $CONTAINER_NAME"
-    docker exec -i -t -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /bin/bash $@
+    docker exec -i -t -u admin --workdir /workspaces $CONTAINER_NAME /bin/bash $@
     exit 0
 fi
 
@@ -137,7 +151,9 @@ if [[ ! -z "${IMAGE_KEY}" ]]; then
 fi
 
 print_info "Building $BASE_IMAGE_KEY base as image: $BASE_NAME using key $BASE_IMAGE_KEY"
-$ROOT/build_base_image.sh $BASE_IMAGE_KEY $BASE_NAME '' '' ''
+if ["$NOB" == false]; then
+	$ROOT/build_base_image.sh $BASE_IMAGE_KEY $BASE_NAME '' '' ''
+fi
 
 if [ $? -ne 0 ]; then
     print_error "Failed to build base image: $BASE_NAME, aborting."
@@ -196,14 +212,14 @@ docker run -it --rm \
     --privileged \
     --network host \
     ${DOCKER_ARGS[@]} \
-    -v $ISAAC_ROS_DEV_DIR:/workspaces/isaac_ros-dev \
+    -v $ISAAC_ROS_DEV_DIR:/workspaces \
     -v /dev/*:/dev/* \
     -v /etc/localtime:/etc/localtime:ro \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
     --entrypoint /usr/local/bin/scripts/workspace-entrypoint.sh \
-    --workdir /workspaces/isaac_ros-dev \
+    --workdir /workspaces \
     $@ \
     $BASE_NAME \
     /bin/bash
