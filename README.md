@@ -34,8 +34,10 @@ Please visit the [Isaac ROS Documentation](https://nvidia-isaac-ros.github.io/re
 ---
 
 ## Usage
+
 Add shortcut to your .bashrc .zshrc
 ```zsh
+echo "export ISAAC_ROS_WS=/path/to/ws" >> ~/.bashrc
 echo "alias isaac_ros='cd ${ISAAC_ROS_WS}/isaac_ros-dev/src/isaac_ros_common && ./scripts/run_dev.sh ${ISAAC_ROS_WS}'" >> ~/.bashrc
 source ~/.bashrc
 ```

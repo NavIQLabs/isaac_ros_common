@@ -7,3 +7,23 @@
 # license agreement from NVIDIA CORPORATION is strictly prohibited.
 
 FROM nvcr.io/nvidia/isaac/ros:aarch64-ros2_humble_b7e1ed6c02a6fa3c1c7392479291c035
+
+
+RUN apt update -y
+RUN apt install git zsh -y
+
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN chsh -s $(which zsh) 
+
+
+RUN apt install ros-humble-isaac-ros-nitros -y
+RUN apt install ros-humble-nmea-msgs -y
+RUN apt install ros-humble-geographic-msgs -y
+RUN apt install ros-humble-robot-localization -y
+RUN apt install ros-humble-xacro -y
+RUN apt install libusb-1.0-0-dev -y
+RUN apt install libturbojpeg -y 
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/zed/lib"
+
+
+
