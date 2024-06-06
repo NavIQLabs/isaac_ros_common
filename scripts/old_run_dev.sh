@@ -138,7 +138,7 @@ fi
 
 PLATFORM="$(uname -m)"
 
-BASE_NAME="newton_ros_dev-$PLATFORM"
+BASE_NAME="isaac_ros_dev-$PLATFORM"
 CONTAINER_NAME="$BASE_NAME-container"
 
 # Remove any exited containers.
@@ -168,8 +168,6 @@ if [[ ! -z "${IMAGE_KEY}" ]]; then
         BASE_IMAGE_KEY=$BASE_IMAGE_KEY.user
     fi
 fi
-
-echo $BASE_IMAGE_KEY
 
 # print_info "Building $BASE_IMAGE_KEY base as image: $BASE_NAME using key $BASE_IMAGE_KEY"
 # if [$NOB]; then
