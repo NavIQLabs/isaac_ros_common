@@ -238,7 +238,7 @@ fi
 
 # Run container from image
 print_info "Running $CONTAINER_NAME"
-docker run -it --rm \
+docker run -it \
     --privileged \
     --network host \
     ${DOCKER_ARGS[@]} \
